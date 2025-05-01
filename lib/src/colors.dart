@@ -21,6 +21,7 @@ class _appColors {
   final blackText = Color(0xff484848);
   final blueText = Color(0xff98B2C9);
   final whiteText = Color(0xffFFFFFF);
+  final grayText = Color(0xffD3D3D3);
 }
 
 _appColors appColors = _appColors();

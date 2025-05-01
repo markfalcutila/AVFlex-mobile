@@ -11,7 +11,12 @@ class LevelFunctionalScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CustomVideoPlayerScreen(videoUrl: videoUrl),
+        builder: (context) => CustomVideoPlayerScreen(
+          videoUrl: videoUrl,
+          labelText: 'FUNCTIONAL LEVEL', // <- Dynamic text for this page
+          labelFooterText: 'FUNCTIONAL ADVANCE LEVEL',
+          boxColor: appColors.greenBg, // <- Dynamic color for this page
+        ),
       ),
     );
   }
@@ -63,17 +68,19 @@ class LevelFunctionalScreen extends StatelessWidget {
                 child: Column(children: [
                   buildCard(
                     context: context,
-                    imagePath: 'assets/images/functional-level-icon.png',
+                    imagePath: 'assets/images/functional-level.png',
                     label: 'FILIPINO SIGN LANGUAGE\nINTERACTIONS',
-                    onTap: () => navigateToVideo(
-                        context, 'assets/videos/sample-vid.mp4'),
+                    onTap: () =>
+                        // navigateToVideo(context, 'assets/videos/ALPHABET.mp4'),
+                        navigateToVideo(
+                            context, 'assets/videos/FUNCTIONAL.mp4'),
                     reverse: true,
                     alignTextRight: false,
                     bgColor: appColors.greenBg,
                     boxHeight: 0.55,
                     zoomImage: true,
-                    scaleImage: 1.6,
-                    offset: Offset(-80, 0),
+                    scaleImage: 1.5,
+                    offset: Offset(-55, 60),
                   ),
                   const SizedBox(height: 10),
                 ]),

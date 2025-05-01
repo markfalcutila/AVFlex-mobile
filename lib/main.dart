@@ -14,6 +14,8 @@ class AVFlexApp extends StatelessWidget {
       title: 'AVFlex',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
       ),

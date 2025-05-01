@@ -1,11 +1,50 @@
-import 'package:avflex/src/colors.dart';
 import 'package:flutter/material.dart';
-
-import 'category_screen.dart'; // If using SVGs
+import 'package:video_player/video_player.dart';
+import 'package:avflex/src/colors.dart';
 import 'package:flutter_svg/svg.dart';
+import 'category_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    _controller = VideoPlayerController.asset('assets/videos/final-intro.mp4')
+      ..setLooping(true)
+      ..setVolume(1.0)
+      ..initialize().then((_) {
+        setState(() {});
+        _controller.play();
+      });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  // Pause/play video based on app lifecycle (optional safety)
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      _controller.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      _controller.play();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,46 +53,51 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Gradient or Image
-          Container(
-            width: size.width,
-            height: size.height,
-            decoration: const BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [Color(0xFFFFE0F0), Color(0xFFFDD9F5)],
-              //   begin: Alignment.topCenter,
-              //   end: Alignment.bottomCenter,
-              // ),
-              // or use background image:
-              image: DecorationImage(
-                image: AssetImage('assets/images/home-bg.png'),
+          // 🎥 Video Background
+          if (_controller.value.isInitialized)
+            Positioned.fill(
+              child: FittedBox(
                 fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
+                  child: VideoPlayer(_controller),
+                ),
               ),
             ),
-          ),
 
-          // Kids at the bottom
+          // 🧒 Kids images at the bottom
           Positioned(
             bottom: -10,
             left: 0,
             right: 0,
-            child: Container(
+            child: SizedBox(
               width: size.width,
-              height: size.height * 0.45,
+              height: size.height * 0.60,
               child: Row(
                 children: [
                   Expanded(
-                    child: Image.asset(
-                      'assets/images/kids-left.png',
-                      fit: BoxFit.fitHeight, // 👈 fill instead of fitHeight
-                      alignment: Alignment.bottomLeft,
+                    child: Transform(
+                      transform: Matrix4.identity()
+                        ..scale(1.6)
+                        ..translate(-size.width * 0.01, -size.height * 0.06),
+                      child: Image.asset(
+                        'assets/images/child-left2.png',
+                        fit: BoxFit.fitHeight,
+                        alignment: Alignment.bottomLeft,
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: Image.asset(
-                      'assets/images/kids-right.png',
-                      fit: BoxFit.fitHeight,
-                      alignment: Alignment.bottomRight,
+                    child: Transform(
+                      transform: Matrix4.identity()
+                        ..scale(1.6)
+                        ..translate(-size.width * 0.18, -size.height * 0.06),
+                      child: Image.asset(
+                        'assets/images/child-right2.png',
+                        fit: BoxFit.fitHeight,
+                        alignment: Alignment.bottomRight,
+                      ),
                     ),
                   ),
                 ],
@@ -61,11 +105,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
+          // 🌟 Logo, Text, and Button
           Positioned(
             top: 0,
             left: 0,
             right: 0,
-            bottom: size.height * 0.2, // leave space at the bottom for the kids
+            bottom: size.height * 0.1,
             child: Align(
               alignment: Alignment.center,
               child: Container(
@@ -74,10 +119,8 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Row for the Star Icon aligned to the left
                     Row(
-                      mainAxisAlignment: MainAxisAlignment
-                          .start, // Aligns the star to the left
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Image.asset(
                           'assets/images/star-icon.png',
@@ -86,8 +129,6 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-
-                    // Text
                     const Text(
                       'MAKULAY NA PAGKATUTO PARA SA BAWAT ISA',
                       textAlign: TextAlign.center,
@@ -98,49 +139,44 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-
-                    // AVFlex Logo
-                    Image.asset(
-                      'assets/images/home-logo.png',
-                      width: size.width * 0.7,
+                    Opacity(
+                      opacity: 0,
+                      child: Image.asset('assets/images/home-logo.png'),
                     ),
-                    const SizedBox(height: 24),
-
-                    // Button
                     SizedBox(
                       width: size.width * 0.5,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: appColors
-                              .orangeBg, // Button background color (optional)
+                          backgroundColor: appColors.orangeBg,
                           padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 24,
-                          ),
+                              vertical: 12, horizontal: 24),
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(24), // Border radius
+                            borderRadius: BorderRadius.circular(24),
                             side: BorderSide(
-                                color: appColors.whiteText,
-                                width: 2), // Border color and width
+                              color: appColors.whiteText,
+                              width: 2,
+                            ),
                           ),
                         ),
                         onPressed: () {
+                          _controller.pause(); // Stop audio before navigating
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (_) => const CategoryScreen()),
-                          );
+                          ).then((_) {
+                            // Resume video when coming back
+                            if (mounted) {
+                              _controller.play();
+                            }
+                          });
                         },
                         child: const Text(
                           'MAGSIMULA',
                           style: TextStyle(
-                            fontFamily:
-                                'Poppins-semibold', // Set font to Poppins
-                            fontSize:
-                                16, // You can adjust the font size as needed
-                            fontWeight: FontWeight
-                                .w600, // Optional: set the font weight
+                            fontFamily: 'Poppins-semibold',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),

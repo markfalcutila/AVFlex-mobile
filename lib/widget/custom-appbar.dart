@@ -2,14 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:avflex/src/colors.dart';
 
 class CustomBackAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomBackAppBar({super.key});
+  final Color? backgroundColor;
+  final bool isTransparent;
+
+  const CustomBackAppBar({
+    super.key,
+    this.backgroundColor,
+    this.isTransparent = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: appColors.whiteText,
-      leadingWidth: 110, // Enough space for icon + text
+      backgroundColor: isTransparent
+          ? Colors.transparent
+          : backgroundColor ?? appColors.whiteText,
+      leadingWidth: 110,
+      automaticallyImplyLeading: false,
       leading: GestureDetector(
         onTap: () => Navigator.pop(context),
         child: const Padding(

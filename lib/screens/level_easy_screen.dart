@@ -11,7 +11,12 @@ class LevelEasyScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CustomVideoPlayerScreen(videoUrl: videoUrl),
+        builder: (context) => CustomVideoPlayerScreen(
+          videoUrl: videoUrl,
+          labelText: 'EASY LEVEL', // <- Dynamic text for this page
+          labelFooterText: 'ALPHABETS & NUMBERS',
+          boxColor: appColors.yellowBg, // <- Dynamic color for this page
+        ),
       ),
     );
   }
@@ -74,7 +79,7 @@ class LevelEasyScreen extends StatelessWidget {
                         imagePath: 'assets/images/easy-alphabets-icon.png',
                         label: 'FILIPINO SIGN LANGUAGE\nALPHABET (A-Z)',
                         onTap: () => navigateToVideo(
-                            context, 'assets/videos/sample-vid.mp4'),
+                            context, 'assets/videos/ALPHABET.mp4'),
                         reverse: true,
                         alignTextRight: false,
                         bgColor: appColors.yellowBg),
@@ -84,7 +89,7 @@ class LevelEasyScreen extends StatelessWidget {
                         imagePath: 'assets/images/easy-numbers-icon.png',
                         label: 'FILIPINO SIGN LANGUAGE\nNUMBERS (0-9)',
                         onTap: () => navigateToVideo(
-                            context, 'assets/videos/sample-vid.mp4'),
+                            context, 'assets/videos/NUMBERS.mp4'),
                         reverse: false,
                         alignTextRight: true,
                         zoomImage: true,

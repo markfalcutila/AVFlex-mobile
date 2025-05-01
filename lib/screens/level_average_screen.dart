@@ -11,7 +11,12 @@ class LevelAverageScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CustomVideoPlayerScreen(videoUrl: videoUrl),
+        builder: (context) => CustomVideoPlayerScreen(
+          videoUrl: videoUrl,
+          labelText: 'AVERAGE LEVEL', // <- Dynamic text for this page
+          labelFooterText: 'BASIC WORDS & PHRASES',
+          boxColor: appColors.orangeBg, // <- Dynamic color for this page
+        ),
       ),
     );
   }
@@ -70,7 +75,9 @@ class LevelAverageScreen extends StatelessWidget {
                         label:
                             'FILIPINO SIGN LANGUAGE \nESSENTIAL CLASSROOM CONVERSATION \nIN SNED',
                         onTap: () => navigateToVideo(
-                            context, 'assets/videos/sample-vid.mp4'),
+                            // context, 'assets/videos/ALPHABET.mp4'),
+                            context,
+                            'assets/videos/GREETINGS_ESSENTIAL_IN_SNED.mp4'),
                         reverse: true,
                         alignTextRight: false,
                         imageFlex: 4,
@@ -83,7 +90,9 @@ class LevelAverageScreen extends StatelessWidget {
                         imagePath: 'assets/images/average-emotions-icon.png',
                         label: 'FILIPINO SIGN LANGUAGE\n EMOTIONS \n(0-9)',
                         onTap: () => navigateToVideo(
-                            context, 'assets/videos/sample-vid2.mp4'),
+                            // context, 'assets/videos/ALPHABET.mp4'),
+                            context,
+                            'assets/videos/EMOTIONS.mp4'),
                         reverse: false,
                         alignTextRight: true,
                         bgColor: appColors.orangeBg),

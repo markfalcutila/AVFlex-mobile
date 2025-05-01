@@ -11,7 +11,12 @@ class LevelDifficultScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CustomVideoPlayerScreen(videoUrl: videoUrl),
+        builder: (context) => CustomVideoPlayerScreen(
+          videoUrl: videoUrl,
+          labelText: 'DIFFICULT LEVEL', // <- Dynamic text for this page
+          labelFooterText: 'SUBJECT-SPECIFIC VOCABULARY',
+          boxColor: appColors.violetBg, // <- Dynamic color for this page
+        ),
       ),
     );
   }
@@ -65,7 +70,8 @@ class LevelDifficultScreen extends StatelessWidget {
                       label: 'FILIPINO SIGN LANGUAGE \nESSENTIAL MATH',
                       onTap: () => navigateToVideo(
                         context,
-                        'assets/videos/sample-vid.mp4',
+                        // 'assets/videos/ALPHABET.mp4',
+                        'assets/videos/MATH.mp4',
                       ),
                       reverse: true,
                       alignTextRight: false,
@@ -78,7 +84,8 @@ class LevelDifficultScreen extends StatelessWidget {
                       label: 'FILIPINO SIGN LANGUAGE\n SCIENCE',
                       onTap: () => navigateToVideo(
                         context,
-                        'assets/videos/sample-vid.mp4',
+                        // 'assets/videos/ALPHABET.mp4',
+                        'assets/videos/SCIENCE.mp4',
                       ),
                       reverse: false,
                       alignTextRight: true,
@@ -94,7 +101,8 @@ class LevelDifficultScreen extends StatelessWidget {
                       label: 'FILIPINO SIGN LANGUAGE \nBASIC \nENGLISH',
                       onTap: () => navigateToVideo(
                         context,
-                        'assets/videos/sample-vid.mp4',
+                        // 'assets/videos/ALPHABET.mp4',
+                        'assets/videos/ENGLISH.mp4',
                       ),
                       reverse: true,
                       alignTextRight: false,
@@ -105,17 +113,19 @@ class LevelDifficultScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     buildCard(
                       context: context,
-                      imagePath: 'assets/images/difficult-body-sounds-icon.png',
+                      imagePath:
+                          'assets/images/difficult-body-sounds-icon2.png',
                       label: 'FILIPINO SIGN LANGUAGE\nBODY \nSOUNDS',
                       onTap: () => navigateToVideo(
                         context,
-                        'assets/videos/sample-vid.mp4',
+                        // 'assets/videos/ALPHABET.mp4',
+                        'assets/videos/BODY_PARTS.mp4',
                       ),
                       reverse: false,
                       alignTextRight: true,
-                      // zoomImage: true,
-                      // scaleImage: 1.2,
-                      offset: Offset(20, -10),
+                      zoomImage: true,
+                      scaleImage: 2.2,
+                      offset: Offset(2, 15),
                       bgColor: appColors.violetBg,
                     ),
                     const SizedBox(height: 20),
@@ -125,7 +135,7 @@ class LevelDifficultScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'BASIC WORDS & PHRASES',
+                  'SUBJECT-SPECIFIC VOCABULARY',
                   style: TextStyle(
                     fontSize: 12,
                     color: appColors.blueText,
